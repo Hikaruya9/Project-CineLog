@@ -8,6 +8,7 @@ class DB{
     {
         $this->db = new PDO('sqlite:database.sqlite');
     }
+    
 }
 
 ?>

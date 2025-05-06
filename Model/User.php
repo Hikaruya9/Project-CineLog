@@ -6,7 +6,6 @@ class User{
     public $email;
     public $password;
     public $avatar;
-    public $movies;
 
 }
 
