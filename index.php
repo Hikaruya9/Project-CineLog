@@ -1,9 +1,10 @@
 <?php
 
-// require 'Model/Database.php';
+require 'functions.php';
 // require 'Model/Movie.php';
 // require 'Model/User.php';
-require 'functions.php';
-require 'routers.php';
+$config = require 'config.php';
+require 'Model/Database.php';
+require 'routes.php';
 
 ?>

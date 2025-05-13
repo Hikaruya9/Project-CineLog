@@ -11,14 +11,19 @@ function view($view, $data = []){
 
 }
 
-// Função para teste de código
-function test(...$dump)
+// Função para teste de código e encerrando a aplicação no fim
+function dd(...$dump)
+{
+    dump($dump);
+    die();
+}
+
+// Função para teste de código, mas sem o encerramento da aplicação
+function dump(...$dump)
 {
     echo "<pre>";
     var_dump($dump);
     echo "</pre>";
-
-    die();
 }
 
 // Função para url que não direcione a qualquer arquivo

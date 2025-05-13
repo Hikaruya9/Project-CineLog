@@ -7,8 +7,8 @@ class Movie{
     public $director;
     public $year;
     public $genre;
-    public $poster;
     public $synopsis;
+    public $poster;
 
 }
 
