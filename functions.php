@@ -8,7 +8,6 @@ function view($view, $data = []){
     }
 
     require "View/Template/app.php";
-
 }
 
 // Função para teste de código e encerrando a aplicação no fim

@@ -1,20 +1,20 @@
 <section class="max-w-lg mx-auto bg-slate-800 p-8 my-30 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-bold mb-6 text-blue-400 text-center">Login</h2>
 
-    <form action="" method="POST" class="space-y-8">
+    <form action="/login" method="POST" class="space-y-8">
         <div>
             <label for="email" class="block mb-1 font-medium">E-mail</label>
-            <input type="email" name="email" id="email" required
+            <input type="email" name="email" required
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 
         <div>
-            <label for="senha" class="block mb-1 font-medium">Senha</label>
-            <input type="password" name="senha" id="senha" required
+            <label for="password" class="block mb-1 font-medium">Senha</label>
+            <input type="password" name="password" required
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 
-        <button type="submit"
+        <button type="submit" name="sign-in"
             class="w-full bg-blue-500 hover:bg-blue-600 transition-colors text-white font-semibold py-2 px-4 rounded-md">
             Entrar
         </button>
