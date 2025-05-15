@@ -4,9 +4,9 @@ class DB{
 
     private $db;
 
-    function __construct()
+    public function __construct($config)
     {
-        $this->db = new PDO('sqlite:database.sqlite');
+        $this->db = new PDO($this->getDns($config));
     }
     
     private function getDns($config){
