@@ -1,15 +1,3 @@
-<!-- <form action="" class="">
-    <input type="text" name="search"
-        class=""
-        placeholder="Pesquisar..." />
-    <button type="submit">Pesquisar</button>
-</form>
-<section class="">
-
-                <div class=""><a href="#"><img src="#" alt="">movie poster</a></div>
-
-</section> -->
-
 <!-- Mensagem de boas-vindas -->
 <section class="text-center mb-10">
     <h2 class="text-4xl font-bold text-white mb-4">Bem-vindo ao CineLog!</h2>
