@@ -7,7 +7,7 @@
 <form action="" method="GET" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
     <input type="text" name="user-search"
         class="w-full sm:w-1/2 px-4 py-2 rounded-md bg-slate-800 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        placeholder="Pesquisar usuarios..." />
+        placeholder="Procurar usuarios..." />
     <button type="submit"
         class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-md transition">
         Pesquisar
@@ -18,7 +18,7 @@
     <h2 class="text-2xl font-bold text-white mb-6">Lista de Usuários</h2>
 
     <?php if (empty($users)): ?>
-        <p class="text-slate-300 text-center">Nenhum usuário cadastrado.</p>
+        <p class="text-slate-300 text-center">Nenhum usuário cadastrado</p>
     <?php else: ?>
         <div class="overflow-x-auto">
             <table class="min-w-full bg-slate-700 rounded-lg overflow-hidden">
@@ -53,13 +53,13 @@
                                 </form>
                             </td>
                             <td class="px-6 py-4">
-                                <form action="" method="GET" class="inline-block mb-1">
+                                <form action="/settings" method="GET" class="inline-block mb-1">
                                     <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
-                                    <button type="submit" name="update-profile" class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition">Atualizar</button>
+                                    <button type="submit" class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition">Atualizar</button>
                                 </form>
-                                <form action="" method="GET" class="inline-block mt-1">
+                                <form action="/delete" method="GET" class="inline-block mt-1">
                                     <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
-                                    <button type="submit" name="delete-profile" class=" pl-6 px-5 py-2 bg-red-500 text-white text-center font-semibold rounded-md hover:bg-red-600 transition">Deletar</button>
+                                    <button type="submit" class=" pl-6 px-5 py-2 bg-red-500 text-white text-center font-semibold rounded-md hover:bg-red-600 transition">Deletar</button>
                                 </form>
                             </td>
                         </tr>

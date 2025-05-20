@@ -1,15 +1,15 @@
 <?php
 
-if (isset($_REQUEST['user-delete'])) {
+if (isset($_REQUEST['user-id'])) {
 
-    $id = $_REQUEST['user'] ?? '';
+    $id = $_REQUEST['user-id'];
 
     $database->query(
         query: "DELETE FROM users WHERE id = :id",
         params: ['id' => $id]
     );
 
-    header('Location: /?message=success');
+    header('Location: /users?message=success');
 }
 
 if (isset($_REQUEST['movie-delete'])) {
@@ -21,5 +21,5 @@ if (isset($_REQUEST['movie-delete'])) {
         params: ['id' => $id]
     );
 
-    header('Location: /?message=success');
+    header('Location: /users?message=success');
 }

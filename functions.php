@@ -10,6 +10,14 @@ function view($view, $data = []){
     require "View/Template/app.php";
 }
 
+function isUserLoggedIn() {
+    return isset($_SESSION['user-id']);
+}
+
+function currentUserId() {
+    return $_SESSION['user-id'] ?? null;
+}
+
 // Função para teste de código e encerrando a aplicação no fim
 function dd(...$dump)
 {

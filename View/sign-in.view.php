@@ -1,6 +1,13 @@
 <section class="max-w-lg mx-auto bg-slate-800 p-8 my-30 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-bold mb-6 text-blue-400 text-center">Login</h2>
 
+    <?php if (isset($_SESSION['message'])): ?>
+        <div class="bg-red-500 text-white p-4 rounded mb-4">
+            <?= htmlspecialchars($_SESSION['message']);
+            unset($_SESSION['message']); ?>
+        </div>
+    <?php endif; ?>
+
     <form action="/login" method="POST" class="space-y-8">
         <div>
             <label for="email" class="block mb-1 font-medium">E-mail</label>
