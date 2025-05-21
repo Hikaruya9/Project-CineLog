@@ -41,7 +41,7 @@
                                     <img
                                         src="<?= htmlspecialchars("/Avatars/" . $user->avatar . ".jpg" ?? 'https://via.placeholder.com/40') ?>"
                                         alt="Avatar de <?= htmlspecialchars($user->username) ?>"
-                                        class="w-10 h-10 rounded-full object-cover border border-slate-500">
+                                        class="w-12 h-12 rounded-full object-cover border border-slate-500">
                                 </div>
                             </td>
                             <td class="px-6 py-4 align-middle"><?= htmlspecialchars($user->username) ?></td>

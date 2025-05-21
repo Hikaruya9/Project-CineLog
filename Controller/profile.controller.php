@@ -1,6 +1,6 @@
 <?php
 
-$id = $_REQUEST['user-id'] ?? '';
+$id = $_REQUEST['user'] ?? $_SESSION['user-id'];
 
 $user = $database->query(
     query: "SELECT id,username,email,avatar FROM users WHERE id = :id",

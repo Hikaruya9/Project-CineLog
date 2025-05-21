@@ -4,19 +4,19 @@
     <form action="/login" method="POST" class="space-y-8">
         <div>
             <label for="username" class="block mb-1 font-medium">Nome de usuário</label>
-            <input type="text" name="username" id="username" required
+            <input type="text" name="username" required
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 
         <div>
             <label for="email" class="block mb-1 font-medium">E-mail</label>
-            <input type="email" name="email" id="email" required
+            <input type="email" name="email" required
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 
         <div>
             <label for="password" class="block mb-1 font-medium">Senha</label>
-            <input type="password" name="password" id="password" required
+            <input type="password" name="password" required
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 

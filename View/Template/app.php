@@ -25,12 +25,15 @@
                 <a href="/">CineLog</a>
             </h1>
             <div class="space-x-4 text-slate-300">
-                <a href="/sign-in" class="text-white font-semibold hover:text-blue-400 transition">Entrar</a>
-                <a href="/sign-up" class="text-white font-semibold hover:text-blue-400 transition">Criar conta</a>
-                <a href="/users" class="text-white font-semibold hover:text-blue-400 transition">Usuários</a>
-                <a href="/profile?user-id=<?= $_SESSION['user-id'] ?>" class="text-white font-semibold hover:text-blue-400 transition">Perfil</a>
-                <a href="/settings" class="text-white font-semibold hover:text-blue-400 transition">Configurações</a>
-                <a href="/logout" class="text-white font-semibold hover:text-red-400 transition">Sair</a>
+                <?php if (!isset($_SESSION['user-id'])): ?>
+                    <a href="/sign-in" class="text-white font-semibold hover:text-blue-400 transition">Entrar</a>
+                    <a href="/sign-up" class="text-white font-semibold hover:text-blue-400 transition">Criar conta</a>
+                <?php else: ?>
+                    <a href="/users" class="text-white font-semibold hover:text-blue-400 transition">Usuários</a>
+                    <a href="/profile" class="text-white font-semibold hover:text-blue-400 transition">Perfil</a>
+                    <a href="/settings" class="text-white font-semibold hover:text-blue-400 transition">Configurações</a>
+                    <a href="/logout" class="text-white font-semibold hover:text-red-400 transition">Sair</a>
+                <?php endif; ?>
             </div>
         </nav>
     </header>
