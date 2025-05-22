@@ -4,6 +4,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['sign-up'])) {
 
+        //regras de negócio para cada campo e os valores recebidos do cadastro
+        $authUser = AuthUser::validate([
+            'username' => ['required'],
+            'email' => ['required', 'email', 'unique'],
+            'password' => ['required',  'strong', 'min:8', 'max:64']
+        ], $_POST);
+
+        // Caso falhe em alguma das validações
+        if ($authUser->notPassed()) {
+            $_SESSION['auth'] = $auth->auths;
+            header('Location: /login');
+            exit();
+        }
+
+        $database->query(
+            query: 'INSERT INTO users (username, email, password) VALUES (:username, :email, :password)',
+            params: [
+                'username' => $_POST['username'],
+                'email' => $_POST['email'],
+                'password' => $_POST['pass']
+            ]
+        );
+
+        header('Location: /login?mensagem=Registrado com sucesso!');
+        exit();
+
         $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         $database->query(

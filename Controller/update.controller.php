@@ -3,16 +3,15 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['update-user'])) {
-
         $user = $database->query(
-            query: "SELECT * FROM users WHERE id = :id",
+            query: "SELECT id,username,email,password,avatar FROM users WHERE id = :id",
             class: User::class,
             params: [
                 'id' => $_SESSION['user-id']
             ]
         )->fetch();
 
-        if (!password_verify($currentPassword, $user->password)) {
+        if (!password_verify($_POST['current-password'], $user->password)) {
             $_SESSION['message'] = "Senha atual inválida";
             header('Location: /settings');
             exit;

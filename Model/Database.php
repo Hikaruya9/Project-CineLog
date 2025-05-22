@@ -63,7 +63,7 @@ $database = new DB($config['database']);
 * FOREIGN KEY (genre_id) REFERENCES genre(id) 
 * );
 **********************************************
-* CREATE TABLE genre(
+* CREATE TABLE genres(
 * id INTEGER PRIMARY KEY AUTOINCREMENT,
 * name VARCHAR(64) NOT NULL UNIQUE
 * );

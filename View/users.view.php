@@ -53,10 +53,6 @@
                                 </form>
                             </td>
                             <td class="px-6 py-4">
-                                <form action="/settings" method="GET" class="inline-block mb-1">
-                                    <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
-                                    <button type="submit" class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition">Atualizar</button>
-                                </form>
                                 <form action="/delete" method="GET" class="inline-block mt-1">
                                     <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
                                     <button type="submit" class=" pl-6 px-5 py-2 bg-red-500 text-white text-center font-semibold rounded-md hover:bg-red-600 transition">Deletar</button>

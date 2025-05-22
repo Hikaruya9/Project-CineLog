@@ -9,6 +9,7 @@
     <?php endif; ?>
 
     <form action="/update" method="POST" enctype="multipart/form-data" class="space-y-6">
+
         <!-- Nome de Usuário -->
         <div>
             <label for="username" class="block mb-2 text-sm font-medium">Nome de Usuário</label>
