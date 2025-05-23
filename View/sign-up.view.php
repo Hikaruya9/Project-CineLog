@@ -1,11 +1,9 @@
 <section class="max-w-lg mx-auto bg-slate-800 p-8 my-30 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-bold mb-6 text-blue-400 text-center">Crie sua conta</h2>
 
-    <?php if (isset($_SESSION['auth'])): // Se existir um valor sob a chave 'validacao', irá executar o bloco seguinte 
-    ?>
-        <div class="border-red-800 bg-red-900 text-stone-400 px-4 py-1 rounded-md border-2 text-sm font-bold">
+    <?php if (isset($_SESSION['auth'])): ?>
+        <div class="bg-red-500 text-white p-4 rounded mb-4">
             <ul>
-                <li>Erro de validação</li>
                 <?php foreach ($_SESSION['auth'] as $auth): // Percorrerá a lista de valores (em string) que estiverem no array 'validacao' em $_SESSION e mostrará esse valor 
                 ?>
                     <li><?= $auth ?></li>
@@ -19,19 +17,19 @@
     <form action="/login" method="POST" class="space-y-8">
         <div>
             <label for="username" class="block mb-1 font-medium">Nome de usuário</label>
-            <input type="text" name="username" required
+            <input type="text" name="username"
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 
         <div>
             <label for="email" class="block mb-1 font-medium">E-mail</label>
-            <input type="email" name="email" required
+            <input type="email" name="email"
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 
         <div>
             <label for="password" class="block mb-1 font-medium">Senha</label>
-            <input type="password" name="password" required
+            <input type="password" name="password"
                 class="w-full px-4 py-2 rounded-md bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
         </div>
 

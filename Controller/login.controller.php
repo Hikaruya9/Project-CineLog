@@ -2,33 +2,34 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    require 'validator.php';
+    $validator = new Validator();
+
     if (isset($_POST['sign-up'])) {
 
-        //regras de negócio para cada campo e os valores recebidos do cadastro
-        $authUser = AuthUser::validate([
-            'username' => ['required'],
-            'email' => ['required', 'email', 'unique'],
-            'password' => ['required',  'strong', 'min:8', 'max:64']
-        ], $_POST);
+        $data = $_POST;
 
-        // Caso falhe em alguma das validações
-        if ($authUser->notPassed()) {
-            $_SESSION['auth'] = $auth->auths;
-            header('Location: /login');
+        $existingEmails = $database->query(
+            query: "SELECT email FROM users",
+            class: User::class
+        )->fetchAll();
+
+        $data['existing_emails'] = $existingEmails;
+
+        //regras de negócio para cada campo e os valores recebidos do cadastro
+        $rules = [
+            'username' => ['required'],
+            'email' => ['required', 'email', 'unique:existing_emails'],
+            'password' => ['required', 'strong', 'min:8', 'max:64']
+        ];
+
+        $validationResult = $validator->validate($rules, $data);
+
+        if ($validationResult->hasErrors()) {
+            $_SESSION['auth'] = $validationResult->getErrors();
+            header('Location: /sign-up');
             exit();
         }
-
-        $database->query(
-            query: 'INSERT INTO users (username, email, password) VALUES (:username, :email, :password)',
-            params: [
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
-                'password' => $_POST['pass']
-            ]
-        );
-
-        header('Location: /login?mensagem=Registrado com sucesso!');
-        exit();
 
         $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
@@ -41,7 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]
         );
 
-        header('Location: /?message=success');
+        $_SESSION['auth'] = "Conta criada com sucesso!";
+        header('Location: /sign-in');
+        exit();
     }
 
     if (isset($_POST['sign-in'])) {
@@ -54,14 +57,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]
         )->fetch();
 
-        if (password_verify($_POST['password'], $user->password)) {
-            $_SESSION['user-id'] = $user->id;
-            $_SESSION['username'] = $user->username;
-            $_SESSION['email'] = $user->email;
-            header('Location: /profile');
-        } else {
-            $_SESSION['message'] = "Email ou senha inválidos!";
+        if (!isset($user->id)) {
+            $_SESSION['auth'] = "Email ou senha inválidos!";
             header('Location: /sign-in');
+            exit();
         }
+
+        $rules = [
+            'password' => ['required', "matches_hash:{$user->password}"],
+        ];
+
+        $validationResult = $validator->validate($rules, $_POST);
+
+        if ($validationResult->hasErrors()) {
+            $_SESSION['auth'] = "Email ou senha inválidos!";
+            header('Location: /sign-in');
+            exit();
+        }
+
+        $_SESSION['user-id'] = $user->id;
+        $_SESSION['username'] = $user->username;
+        $_SESSION['email'] = $user->email;
+
+        header('Location: /profile');
     }
+} else {
+    header('Location: /sign-in');
 }

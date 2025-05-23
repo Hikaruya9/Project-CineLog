@@ -9,4 +9,5 @@ if(!file_exists("Controller/{$controller}.controller.php")){
 }
 
 require "Controller/{$controller}.controller.php";
+
 ?>

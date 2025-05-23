@@ -1,10 +1,16 @@
 <div class="max-w-2xl mx-auto bg-slate-800 p-8 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-semibold mb-6 text-blue-400">Editar Perfil</h2>
 
-    <?php if (isset($_SESSION['message'])): ?>
+    <?php if (isset($_SESSION['auth'])): ?>
         <div class="bg-red-500 text-white p-4 rounded mb-4">
-            <?= htmlspecialchars($_SESSION['message']);
-            unset($_SESSION['message']); ?>
+            <ul>
+                <?php foreach ($_SESSION['auth'] as $auth): // Percorrerá a lista de valores (em string) que estiverem no array 'validacao' em $_SESSION e mostrará esse valor 
+                ?>
+                    <li><?= $auth ?></li>
+                <?php endforeach;
+                unset($_SESSION['auth']); // Limpa todos os valores de 'validacao' em $_SESSION
+                ?>
+            </ul>
         </div>
     <?php endif; ?>
 
@@ -48,7 +54,7 @@
         <!-- Botão de Enviar -->
         <div class="text-right">
             <button type="submit" name="update-user"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded font-semibold transition">Salvar Alterações</button>
+                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded font-semibold transition">Salvar</button>
         </div>
     </form>
 </div>

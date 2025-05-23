@@ -1,8 +1,11 @@
 <?php
 
+require 'validator.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['update-user'])) {
+        
         $user = $database->query(
             query: "SELECT id,username,email,password,avatar FROM users WHERE id = :id",
             class: User::class,
@@ -11,10 +14,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]
         )->fetch();
 
-        if (!password_verify($_POST['current-password'], $user->password)) {
-            $_SESSION['message'] = "Senha atual inválida";
-            header('Location: /settings');
-            exit;
+        $data = $_POST;
+
+        $existingEmails = $database->query(
+            query: "SELECT email FROM users WHERE id != :id",
+            class: User::class,
+            params: [
+                'id' => $_SESSION['user-id']
+            ]
+        )->fetchAll();
+
+        $data['existing_emails'] = $existingEmails;
+
+        $rules = [
+            'username' => ['required'],
+            'email' => ['required', 'email', 'unique:existing_emails'],
+            'current-password' => ['required', "matches_hash:{$user->password}"],
+            'new-password' => ['strong', 'min:8', 'max:64']
+        ];
+
+        $validationResult = $validator->validate($rules, $data);
+
+        if ($validationResult->hasErrors()) {
+            $_SESSION['auth'] = $validationResult->getErrors();
+            header('Location: /sign-up');
+            exit();
         }
 
         $params = [
@@ -54,7 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             params: $params
         );
 
-        header('Location: /users?message=success');
+        $_SESSION['auth'] = "Perfil atualizado com sucesso!";
+        header('Location: /settings');
         view('settings', compact('user'));
     }
 }
