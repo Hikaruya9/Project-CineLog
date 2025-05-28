@@ -9,17 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $data = $_POST;
 
-        $existingEmails = $database->query(
+        $usersEmails = $database->query(
             query: "SELECT email FROM users",
             class: User::class
         )->fetchAll();
 
-        $data['existing_emails'] = $existingEmails;
+        $data['users_emails'] = $usersEmails;
 
         //regras de negócio para cada campo e os valores recebidos do cadastro
         $rules = [
             'username' => ['required'],
-            'email' => ['required', 'email', 'unique:existing_emails'],
+            'email' => ['required', 'email', 'unique:users_emails,email'],
             'password' => ['required', 'strong', 'min:8', 'max:64']
         ];
 

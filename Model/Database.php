@@ -41,7 +41,7 @@ $database = new DB($config['database']);
 * username VARCHAR(64) NOT NULL,
 * email VARCHAR(128) NOT NULL UNIQUE,
 * password VARCHAR(64) NOT NULL,
-* avatar VARCHAR(128) DEFAULT ('default')
+* avatar VARCHAR(255) DEFAULT ('default')
 * );
 **********************************************
 * CREATE TABLE users_movies(

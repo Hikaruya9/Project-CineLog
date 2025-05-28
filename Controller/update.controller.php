@@ -5,42 +5,49 @@ require 'validator.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['update-user'])) {
-        
+
+        $validator = new Validator();
+
+        // Busca o usuário atual
         $user = $database->query(
-            query: "SELECT id,username,email,password,avatar FROM users WHERE id = :id",
+            query: "SELECT id, username, email, password, avatar FROM users WHERE id = :id",
             class: User::class,
-            params: [
-                'id' => $_SESSION['user-id']
-            ]
+            params: ['id' => $_SESSION['user-id']]
         )->fetch();
 
         $data = $_POST;
 
-        $existingEmails = $database->query(
+        // Busca emails de outros usuários (excluindo o atual)
+        $usersEmails = $database->query(
             query: "SELECT email FROM users WHERE id != :id",
             class: User::class,
-            params: [
-                'id' => $_SESSION['user-id']
-            ]
+            params: ['id' => $_SESSION['user-id']]
         )->fetchAll();
 
-        $data['existing_emails'] = $existingEmails;
+        // Passa a lista de objetos User para o Validator
+        $data['users_emails'] = $usersEmails;
 
+        $data['avatar'] = $_FILES['avatar'] ?? null;
+
+        // Define as regras
         $rules = [
             'username' => ['required'],
-            'email' => ['required', 'email', 'unique:existing_emails'],
-            'current-password' => ['required', "matches_hash:{$user->password}"],
-            'new-password' => ['strong', 'min:8', 'max:64']
+            'email' => ['required', 'email', 'unique:users_emails,email'], // Verifica a propriedade 'email' dos objetos
+            'current-password' => ['required', "matches_hash:{$user->password}"], // Valida hash
+            'new-password' => ['empty', 'strong', 'min:8', 'max:64'],
+            'avatar' => ['empty', 'image']
         ];
 
+        // Executa a validação
         $validationResult = $validator->validate($rules, $data);
 
         if ($validationResult->hasErrors()) {
             $_SESSION['auth'] = $validationResult->getErrors();
-            header('Location: /sign-up');
+            header('Location: /settings'); // Redireciona de volta para a página de edição
             exit();
         }
 
+        // Atualiza os dados no banco
         $params = [
             'username' => $_POST['username'],
             'email' => $_POST['email'],
@@ -55,31 +62,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $fields .= ", password = :password";
         }
 
-        // Se uma nova imagem for enviada
-        // if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
-        //     $fileTmpPath = $_FILES['profile_picture']['tmp_name'];
-        //     $fileName = $_FILES['profile_picture']['name'];
-        //     $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $avatarPath = $user->avatar;
 
-        //     $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        //     if (in_array(strtolower($fileExtension), $allowedExtensions)) {
-        //         $newFileName = 'user_' . $id . '_' . time() . '.' . $fileExtension;
-        //         $destination = 'uploads/profiles/' . $newFileName;
+        if (!empty($_FILES['avatar']['name'])) {
+            $uploadDir = 'uploads/avatars/';
+            $filename = uniqid() . '_' . basename($_FILES['avatar']['name']);
+            $targetPath = $uploadDir . $filename;
 
-        //         if (move_uploaded_file($fileTmpPath, $destination)) {
-        //             $params['avatar'] = $destination;
-        //             $fields .= ", profile_picture = :avatar";
-        //         }
-        //     }
-        // }
+            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $targetPath)) {
+                // Apagar avatar antigo se não for o default
+                if ($user->avatar !== ($uploadDir . 'avatar_default.jpg')) {
+                    @unlink($user->avatar);
+                }
+                $avatarPath = $targetPath;
+                $params['avatar'] = $avatarPath;
+                $fields .= ", avatar = :avatar";
+            }
+            // dd($avatarPath);
+        }
 
         $database->query(
             query: "UPDATE users SET $fields WHERE id = :id",
             params: $params
         );
 
-        $_SESSION['auth'] = "Perfil atualizado com sucesso!";
+        $_SESSION['auth'][] = "Perfil atualizado com sucesso!";
         header('Location: /settings');
-        view('settings', compact('user'));
+        exit();
     }
 }

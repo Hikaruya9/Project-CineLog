@@ -39,7 +39,7 @@
                             <td class="px-6 py-4 align-middle">
                                 <div class="flex justify-center">
                                     <img
-                                        src="<?= htmlspecialchars("/Avatars/" . $user->avatar . ".jpg" ?? 'https://via.placeholder.com/40') ?>"
+                                        src="<?= htmlspecialchars($user->avatar) ?>"
                                         alt="Avatar de <?= htmlspecialchars($user->username) ?>"
                                         class="w-12 h-12 rounded-full object-cover border border-slate-500">
                                 </div>

@@ -46,8 +46,8 @@
 
         <!-- Foto de Perfil -->
         <div>
-            <label for="profile-picture" class="block mb-2 text-sm font-medium">Foto de Perfil</label>
-            <input type="file" name="profile-picture" accept="image/*"
+            <label for="avatar" class="block mb-2 text-sm font-medium">Foto de Perfil</label>
+            <input type="file" name="avatar" accept="image/*"
                 class="w-full px-4 py-2 rounded bg-slate-700 text-slate-300 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400 file:bg-slate-600 file:border-0 file:px-4 file:py-2 file:mr-4 file:text-white file:rounded-md">
         </div>
 
