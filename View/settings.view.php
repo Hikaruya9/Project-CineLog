@@ -14,7 +14,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="/update" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <form action="/user-update" method="POST" enctype="multipart/form-data" class="space-y-6">
 
         <!-- Nome de Usuário -->
         <div>

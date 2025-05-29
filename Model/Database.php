@@ -41,7 +41,7 @@ $database = new DB($config['database']);
 * username VARCHAR(64) NOT NULL,
 * email VARCHAR(128) NOT NULL UNIQUE,
 * password VARCHAR(64) NOT NULL,
-* avatar VARCHAR(255) DEFAULT ('default')
+* avatar VARCHAR(255) DEFAULT ('uploads/avatars/avatar_default.jpg')
 * );
 **********************************************
 * CREATE TABLE users_movies(
@@ -54,13 +54,12 @@ $database = new DB($config['database']);
 **********************************************
 * CREATE TABLE movies(
 * id INTEGER PRIMARY KEY AUTOINCREMENT,
-* title VARCHAR(255) NOT NULL,
-* director VARCHAR(64) NOT NULL,
+* title VARCHAR NOT NULL,
+* director VARCHAR NOT NULL,
 * year INTEGER NOT NULL,
-* genre_id INTEGER NOT NULL,
+* genre VARCHAR NOT NULL,
 * synopsis NOT NULL,
-* poster VARCHAR(255) NOT NULL,
-* FOREIGN KEY (genre_id) REFERENCES genre(id) 
+* poster VARCHAR DEFAULT ('uploads/posters/poster_default.jpg')
 * );
 **********************************************
 * CREATE TABLE genres(
