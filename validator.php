@@ -25,7 +25,7 @@ class Validator
                     }
                     continue;
                 }
-                
+
                 $this->applyRule($rule, $field, $value, $data);
             }
         }
@@ -96,40 +96,44 @@ class Validator
     // Trata de uma regra que verifica se há um número mínimo de caracteres presentes na senha
     private function min($field, $value, $min)
     {
-        if (strlen($value) < $min) {
+        if (gettype($value) === "string" && strlen($value) < $min) {
             $this->errors[] = "O $field precisa ter no mínimo $min caracteres";
+        } elseif (gettype($value) === "integer" && $value < $min){
+            $this->errors[] = "O $field precisa ser um número acima de $min";
         }
     }
 
     // Trata de uma regra que verifica se há um número máximo de caracteres presentes na senha
     private function max($field, $value, $max)
     {
-        if (strlen($value) > $max) {
+        if (gettype($value) === "string" && strlen($value) > $max) {
             $this->errors[] = "O $field pode ter no máximo $max caracteres";
+        } elseif (gettype($value) === "integer" && $value > $max){
+            $this->errors[] = "O $field precisa ser um número abaixo de $max";
         }
     }
 
     private function image($field, $file)
-{
-    // Verifica erros de upload
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        $this->errors[] = "Erro no upload do $field";
-        return;
-    }
+    {
+        // Verifica erros de upload
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            $this->errors[] = "Erro no upload do $field";
+            return;
+        }
 
-    // Tipos permitidos
-    $allowedTypes = ['image/jpeg', 'image/png'];
-    $detectedType = mime_content_type($file['tmp_name']);
+        // Tipos permitidos
+        $allowedTypes = ['image/jpeg', 'image/png'];
+        $detectedType = mime_content_type($file['tmp_name']);
 
-    if (!in_array($detectedType, $allowedTypes)) {
-        $this->errors[] = "O $field deve ser uma imagem (JPG, PNG)";
-    }
+        if (!in_array($detectedType, $allowedTypes)) {
+            $this->errors[] = "O $field deve ser uma imagem (JPG, PNG)";
+        }
 
-    // Tamanho máximo (2MB)
-    if ($file['size'] > 2 * 1024 * 1024) {
-        $this->errors[] = "O $field deve ter no máximo 2MB";
+        // Tamanho máximo (2MB)
+        if ($file['size'] > 2 * 1024 * 1024) {
+            $this->errors[] = "O $field deve ter no máximo 2MB";
+        }
     }
-}
 
     // Verifica se há erros
     public function hasErrors()

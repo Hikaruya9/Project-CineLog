@@ -1,9 +1,9 @@
 <?php
 
 $movie = $database->query(
-query: "SELECT * FROM movies WHERE id = :id",
+query: "SELECT id,title,director,year,genre,synopsis,poster FROM movies WHERE id = :id",
 class: Movie::class,
-params: ['id' => $_REQUEST['id']]
+params: ['id' => $_REQUEST['movie']]
 )->fetch();
 
 view('movie', compact('movie'));

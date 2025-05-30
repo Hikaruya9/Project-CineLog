@@ -1,11 +1,12 @@
 <?php
 
-if (isset($_REQUEST['movie-delete'])) {
+if (isset($_REQUEST['movie-id'])) {
 
     $id = $_REQUEST['movie-id'];
 
     $movie = $database->query(
-        query: "SELECT poster FROM movies WHERE id = :id",
+        query: "SELECT title,poster FROM movies WHERE id = :id",
+        class: Movie::class,
         params: ["id" => $id]
     )->fetch();
 
@@ -18,6 +19,6 @@ if (isset($_REQUEST['movie-delete'])) {
         params: ['id' => $id]
     );
 
-    header('Location: /?message=success');
+    header('Location: /movies?message=success');
     exit();
 }

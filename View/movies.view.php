@@ -29,6 +29,8 @@
                         <th class="px-6 py-3 text-center">Diretor</th>
                         <th class="px-6 py-3 text-center">Ano</th>
                         <th class="px-6 py-3 text-center">Gênero</th>
+                        <th></th>
+                        <th class="px-6 py-3 text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="text-slate-100 divide-y divide-slate-600">
@@ -40,26 +42,27 @@
                                     <img
                                         src="<?= htmlspecialchars($movie->poster) ?>"
                                         alt="Avatar de <?= htmlspecialchars($movie->title) ?>"
-                                        class="w-12 h-12 rounded-full object-cover border border-slate-500">
+                                        class="w-32 h-full rounded-sm object-cover">
                                 </div>
                             </td>
                             <td class="px-6 py-4 align-middle"><?= htmlspecialchars($movie->title) ?></td>
                             <td class="px-6 py-4 align-middle"><?= htmlspecialchars($movie->director) ?></td>
                             <td class="px-6 py-4 align-middle"><?= $movie->year ?></td>
+                            <td class="px-6 py-4 align-middle"><?= htmlspecialchars($movie->genre) ?></td>
                             <td class="px-6 py-4">
-                                <form action="/profile" method="GET" class="inline-block mb-1">
-                                    <input type="number" name="user" value="<?= $user->id ?>" hidden>
-                                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">Ver Filme</button>
+                                <form action="/movie" method="GET" class="inline-block mb-1">
+                                    <input type="number" name="movie" value="<?= $movie->id ?>" hidden>
+                                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">Ver Filme</button>
                                 </form>
                             </td>
                             <td class="px-6 py-4">
-                                <form action="/delete-user" method="GET" class="inline-block mt-1">
-                                    <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
-                                    <button type="submit" class=" pl-6 px-5 py-2 bg-red-500 text-white text-center font-semibold rounded-md hover:bg-red-600 transition">Deletar</button>
+                                <form action="/movie-update" method="GET" class="inline-block mt-1">
+                                    <input type="number" name="movie-id" value="<?= $movie->id ?>" hidden>
+                                    <button type="submit" class="pl-6 px-5 py-2 bg-yellow-500 text-white text-center font-semibold rounded-md hover:bg-yellow-600 transition">Atualizar</button>
                                 </form>
-                                <form action="/delete-user" method="GET" class="inline-block mt-1">
-                                    <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
-                                    <button type="submit" class=" pl-6 px-5 py-2 bg-red-500 text-white text-center font-semibold rounded-md hover:bg-red-600 transition">Deletar</button>
+                                <form action="/movie-delete" method="GET" class="inline-block mt-1">
+                                    <input type="number" name="movie-id" value="<?= $movie->id ?>" hidden>
+                                    <button type="submit" class="pl-6 px-5 py-2 bg-red-500 text-white text-center font-semibold rounded-md hover:bg-red-600 transition">Deletar</button>
                                 </form>
                             </td>
                         </tr>

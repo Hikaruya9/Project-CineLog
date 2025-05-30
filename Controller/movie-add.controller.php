@@ -5,19 +5,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add-movie'])) {
     require 'validator.php';
     $validator = new Validator();
 
-    // $rules = [
-    //     'username' => ['required'],
-    //     'email' => ['required', 'email', 'unique:users_emails,email'],
-    //     'password' => ['required', 'strong', 'min:8', 'max:64']
-    // ];
+    $data = $_POST;
+    settype($data['year'], "integer");
+    $data['poster'] = $_FILES['poster'] ?? '';
 
-    // $validationResult = $validator->validate($rules, $data);
+    $rules = [
+        'title' => ['required'],
+        'director' => ['required'],
+        'year' => ['required', 'min:1880', 'max:2100'],
+        'genre' => ['required'],
+        'synopsis' => ['required'],
+        'poster' => ['image']
+    ];
 
-    // if ($validationResult->hasErrors()) {
-    //     $_SESSION['auth'] = $validationResult->getErrors();
-    //     header('Location: /sign-up');
-    //     exit();
-    // }
+    $validationResult = $validator->validate($rules, $data);
+
+    if ($validationResult->hasErrors()) {
+        $_SESSION['auth'] = $validationResult->getErrors();
+        header('Location: /movie-add');
+        exit();
+    }
 
     if (!empty($_FILES['poster']['name'])) {
         $uploadDir = 'uploads/posters/';
