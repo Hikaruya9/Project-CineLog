@@ -21,4 +21,6 @@ if (isset($_REQUEST['movie-id'])) {
 
     header('Location: /movies?message=success');
     exit();
+} else {
+    header('Location: /movies');
 }

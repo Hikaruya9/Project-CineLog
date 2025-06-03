@@ -71,4 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update-movie'])) {
     )->fetch();
 
     view('movie-update', compact('movie'));
+} else {
+    header('Location: /movies');
 }

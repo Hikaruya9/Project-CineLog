@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['sign-in'])) {
 
         $user = $database->query(
-            query: "SELECT id,username,email,password,avatar FROM users WHERE email = :email",
+            query: "SELECT id,username,email,password,avatar,permission_level FROM users WHERE email = :email",
             class: User::class,
             params: [
                 'email' => $_POST['email']
@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user-id'] = $user->id;
         $_SESSION['username'] = $user->username;
         $_SESSION['email'] = $user->email;
+        $_SESSION['permission_level'] = $user->permission_level;
 
         header('Location: /profile');
     }

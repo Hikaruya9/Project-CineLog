@@ -42,7 +42,7 @@
                             <td class="px-6 py-4 align-middle"><?= htmlspecialchars($user->email) ?></td>
                             <td class="px-6 py-4">
                                 <form action="/profile" method="GET" class="inline-block mb-1">
-                                    <input type="number" name="user" value="<?= $user->id ?>" hidden>
+                                    <input type="number" name="user-id" value="<?= $user->id ?>" hidden>
                                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">Ver Perfil</button>
                                 </form>
                             </td>

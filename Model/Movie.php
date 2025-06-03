@@ -9,6 +9,9 @@ class Movie{
     public $genre;
     public $synopsis;
     public $poster;
+    public $rating;
+    public $user_rating;
+    public $reviews = [];
 
 }
 

@@ -4,11 +4,10 @@
     <?php if (isset($_SESSION['auth'])): ?>
         <div class="bg-red-500 text-white p-4 rounded mb-4">
             <ul>
-                <?php foreach ($_SESSION['auth'] as $auth): // Percorrerá a lista de valores (em string) que estiverem no array 'validacao' em $_SESSION e mostrará esse valor 
-                ?>
+                <?php foreach ($_SESSION['auth'] as $auth): ?>
                     <li><?= $auth ?></li>
                 <?php endforeach;
-                unset($_SESSION['auth']); // Limpa todos os valores de 'validacao' em $_SESSION
+                unset($_SESSION['auth']);
                 ?>
             </ul>
         </div>
@@ -51,10 +50,49 @@
                 class="w-full px-4 py-2 rounded bg-slate-700 text-slate-300 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400 file:bg-slate-600 file:border-0 file:px-4 file:py-2 file:mr-4 file:text-white file:rounded-md">
         </div>
 
-        <!-- Botão de Enviar -->
-        <div class="text-right">
+        <!-- Botões -->
+        <div class="flex justify-between items-center pt-4">
+            <!-- Botão para Abrir Modal de Confirmação -->
+            <button type="button" onclick="openDeleteModal()"
+                class="text-red-500 hover:text-red-400 font-medium flex items-center">
+                <i class="fas fa-trash-alt mr-2"></i>
+                Excluir Conta
+            </button>
+
+            <!-- Botão de Salvar -->
             <button type="submit" name="update-user"
                 class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded font-semibold transition">Salvar</button>
         </div>
     </form>
 </div>
+
+<!-- Confirmação para Excluir Conta -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-slate-800 p-6 rounded-lg max-w-md w-full">
+        <h3 class="text-xl font-semibold text-white mb-4">Confirmar Exclusão</h3>
+        <p class="text-gray-300 mb-6">Tem certeza que deseja excluir sua conta permanentemente? Esta ação não pode ser desfeita.</p>
+
+        <div class="flex justify-end space-x-4">
+            <button onclick="closeDeleteModal()"
+                class="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-gray-700 transition">
+                Cancelar
+            </button>
+            <form action="/user-delete" method="POST">
+                <button type="submit"
+                    class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded font-medium transition">
+                    Confirmar Exclusão
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+</script>

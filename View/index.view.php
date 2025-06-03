@@ -19,7 +19,7 @@
 <section class="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
     <?php foreach($movies as $movie): ?>
         <div class="bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-            <a href="/movie?id=<?= $movie->id ?>">
+            <a href="/movie?movie-id=<?= $movie->id ?>">
                 <img src="<?= htmlspecialchars($movie->poster) ?>" alt="Poster de <?= htmlspecialchars($movie->title) ?>" class="w-full h-90% object-cover" />
                 <div class="p-4">
                     <h3 class="text-white font-semibold text-lg truncate"><?= htmlspecialchars($movie->title) ?></h3>

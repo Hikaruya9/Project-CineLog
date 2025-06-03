@@ -51,7 +51,7 @@
                             <td class="px-6 py-4 align-middle"><?= htmlspecialchars($movie->genre) ?></td>
                             <td class="px-6 py-4">
                                 <form action="/movie" method="GET" class="inline-block mb-1">
-                                    <input type="number" name="movie" value="<?= $movie->id ?>" hidden>
+                                    <input type="number" name="movie-id" value="<?= $movie->id ?>" hidden>
                                     <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">Ver Filme</button>
                                 </form>
                             </td>

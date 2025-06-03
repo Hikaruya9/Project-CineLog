@@ -1,6 +1,7 @@
 <?php
 
-class DB{
+class DB
+{
 
     private $db;
 
@@ -8,23 +9,25 @@ class DB{
     {
         $this->db = new PDO($this->getDns($config));
     }
-    
-    private function getDns($config){
+
+    private function getDns($config)
+    {
         $driver = $config['driver'];
         unset($config['driver']);
 
         $dsn = $driver . ':' . http_build_query($config, '', ';');
 
-        if($driver == 'sqlite'){
+        if ($driver == 'sqlite') {
             $dsn = $driver . ':' . $config['database'];
         }
         return $dsn;
     }
 
-    public function query($query, $class = null, $params = []){
+    public function query($query, $class = null, $params = [])
+    {
         $prepare = $this->db->prepare($query);
 
-        if($class){
+        if ($class) {
             $prepare->setFetchMode(PDO::FETCH_CLASS, $class);
         }
 
@@ -44,13 +47,16 @@ $database = new DB($config['database']);
 * avatar VARCHAR(255) DEFAULT ('uploads/avatars/avatar_default.jpg')
 * );
 **********************************************
-* CREATE TABLE users_movies(
-* id_user INTEGER,
-* id_movie INTEGER,
-* rate INTEGER NOT NULL,
-* PRIMARY KEY(id_user, id_movie)
-* -- log_time DATETIME DEFAULT CURRENT_TIME
-* );
+* CREATE TABLE reviews (
+* id INTEGER PRIMARY KEY AUTOINCREMENT,
+* movie_id INTEGER NOT NULL,
+* user_id INTEGER NOT NULL,
+* rate INTEGER NOT NULL CHECK (nota BETWEEN 1 AND 5),
+* review TEXT,
+* date TEXT DEFAULT (strftime('%Y-%m-%d', 'now', 'localtime')),  -- Isso irá gravar a data/hora atual automaticamente
+* FOREIGN KEY (movie_id) REFERENCES movies(id),
+* FOREIGN KEY (user_id) REFERENCES users(id)
+);
 **********************************************
 * CREATE TABLE movies(
 * id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,10 +66,5 @@ $database = new DB($config['database']);
 * genre VARCHAR NOT NULL,
 * synopsis NOT NULL,
 * poster VARCHAR DEFAULT ('uploads/posters/poster_default.jpg')
-* );
-**********************************************
-* CREATE TABLE genres(
-* id INTEGER PRIMARY KEY AUTOINCREMENT,
-* name VARCHAR(64) NOT NULL UNIQUE
 * );
 */

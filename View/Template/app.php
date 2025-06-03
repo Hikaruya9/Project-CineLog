@@ -1,11 +1,3 @@
-<?php
-
-// if(!isset($_SESSION)){
-//     session_start();
-// }
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -29,8 +21,10 @@
                     <a href="/sign-in" class="text-white font-semibold hover:text-blue-400 transition">Entrar</a>
                     <a href="/sign-up" class="text-white font-semibold hover:text-blue-400 transition">Criar conta</a>
                 <?php else: ?>
+                    <?php if ($_SESSION['permission_level'] !== 0): ?>
                     <a href="/movies" class="text-white font-semibold hover:text-blue-400 transition">Filmes</a>
                     <a href="/users" class="text-white font-semibold hover:text-blue-400 transition">Usuários</a>
+                    <?php endif; ?>
                     <a href="/profile" class="text-white font-semibold hover:text-blue-400 transition">Perfil</a>
                     <a href="/settings" class="text-white font-semibold hover:text-blue-400 transition">Configurações</a>
                     <a href="/logout" class="text-white font-semibold hover:text-red-400 transition">Sair</a>
