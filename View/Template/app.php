@@ -41,7 +41,7 @@
     <!-- Rodapé -->
     <footer class="bg-slate-800 text-slate-300 py-6 mt-10">
         <div class="container mx-auto px-6 flex flex-col sm:flex-row justify-between">
-            <h3 class="text-sm">2025, CineLog &copy; Todos os direitos reservados</h3>
+            <h3 class="text-sm">Todos os direitos reservados CineLog &copy; 2025</h3>
             <div class="text-sm mt-4 sm:mt-0 space-y-1">
                 <p>test@example.com</p>
                 <p>Rua do Cachimbo, 9999, Cidade - RS</p>

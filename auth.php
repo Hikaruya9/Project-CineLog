@@ -2,9 +2,9 @@
 
 class Auth
 {
-    function requireExtraAuth()
+    function requirePermission()
     {
-        if (!isset($_SESSION['user-id']) && $_SESSION['permission_level'] === 1) {
+        if (empty($_SESSION['user-id']) || !isset($_SESSION['permission_level']) || $_SESSION['permission_level'] != "1") {
             header('Location: /');
             exit;
         }

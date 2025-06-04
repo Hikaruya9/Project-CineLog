@@ -15,6 +15,11 @@ if (isset($_REQUEST['movie-id'])) {
     }
 
     $database->query(
+    query: "DELETE FROM reviews WHERE movie_id = :id",
+    params: ['id' => $id]
+    );
+
+    $database->query(
         query: "DELETE FROM movies WHERE id = :id",
         params: ['id' => $id]
     );

@@ -8,7 +8,7 @@ $protectedRoutes = ['/settings', '/logout', '/user-delete', '/user-update', '/re
 $publicRoutes = ['/sign-in', '/sign-up']; // Redireciona o usuário autenticado caso ele tente acessar essas páginas estando logado
 
 if (in_array($_SERVER['REQUEST_URI'], $extraProtectedRoutes)) {
-    $auth->requireExtraAuth();
+    $auth->requirePermission();
 } elseif (in_array($_SERVER['REQUEST_URI'], $protectedRoutes)) {
     $auth->requireAuth();
 } elseif (in_array($_SERVER['REQUEST_URI'], $publicRoutes)) {

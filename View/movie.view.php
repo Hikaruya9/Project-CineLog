@@ -52,6 +52,14 @@
                 Enviar avaliação
             </a>
         </div>
+    <?php else: ?>
+        <div class="mb-8 text-right">
+            <a href="/sign-up"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200">
+                <i class="fas fa-plus mr-2"></i>
+                Enviar avaliação
+            </a>
+        </div>
     <?php endif; ?>
 
     <!-- Seção de Avaliações -->

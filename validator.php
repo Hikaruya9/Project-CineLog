@@ -13,11 +13,11 @@ class Validator
             $skip = false;
 
             foreach ($fieldRules as $rule) {
-                if ($skip) continue;
+                if ($skip) break;
 
                 if ($rule === 'empty') {
                     if (is_array($value)) {
-                        // Se for arquivo, verifica se foi enviado
+                        // Se for um arquivo, verifica se foi enviado
                         $skip = empty($value['name']);
                     } else {
                         // Se for texto, verifica se está vazio
@@ -26,7 +26,14 @@ class Validator
                     continue;
                 }
 
+                $previousErrorCount = count($this->errors);
                 $this->applyRule($rule, $field, $value, $data);
+                $currentErrorCount = count($this->errors);
+
+                // Se a aplicação da regra adicionou erros, parar validação desse campo
+                if ($currentErrorCount > $previousErrorCount) {
+                    break;
+                }
             }
         }
         return $this;
@@ -70,7 +77,7 @@ class Validator
     private function matchesHash($field, $password, $hash)
     {
         if (!password_verify($password, $hash)) {
-            $this->errors[] = "A $field está incorreta";
+            $this->errors[] = "O $field está incorreto";
         }
     }
 
@@ -98,7 +105,7 @@ class Validator
     {
         if (gettype($value) === "string" && strlen($value) < $min) {
             $this->errors[] = "O $field precisa ter no mínimo $min caracteres";
-        } elseif (gettype($value) === "integer" && $value < $min){
+        } elseif (gettype($value) === "integer" && $value < $min) {
             $this->errors[] = "O $field precisa ser um número acima de $min";
         }
     }
@@ -108,7 +115,7 @@ class Validator
     {
         if (gettype($value) === "string" && strlen($value) > $max) {
             $this->errors[] = "O $field pode ter no máximo $max caracteres";
-        } elseif (gettype($value) === "integer" && $value > $max){
+        } elseif (gettype($value) === "integer" && $value > $max) {
             $this->errors[] = "O $field precisa ser um número abaixo de $max";
         }
     }
