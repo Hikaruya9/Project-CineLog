@@ -100,7 +100,7 @@ class Validator
         }
     }
 
-    // Trata de uma regra que verifica se há um número mínimo de caracteres presentes na senha
+    // Regra para limitar o valor mínimo de caracteres ou numericamente
     private function min($field, $value, $min)
     {
         if (gettype($value) === "string" && strlen($value) < $min) {
@@ -110,7 +110,7 @@ class Validator
         }
     }
 
-    // Trata de uma regra que verifica se há um número máximo de caracteres presentes na senha
+    // Regra para limitar o valor máximo de caracteres ou numericamente
     private function max($field, $value, $max)
     {
         if (gettype($value) === "string" && strlen($value) > $max) {
@@ -128,7 +128,7 @@ class Validator
             return;
         }
 
-        // Tipos permitidos
+        // Tipos de arquivo permitidos
         $allowedTypes = ['image/jpeg', 'image/png'];
         $detectedType = mime_content_type($file['tmp_name']);
 
@@ -136,7 +136,7 @@ class Validator
             $this->errors[] = "O $field deve ser uma imagem (JPG, PNG)";
         }
 
-        // Tamanho máximo (2MB)
+        // Tamanho máximo do arquivo
         if ($file['size'] > 2 * 1024 * 1024) {
             $this->errors[] = "O $field deve ter no máximo 2MB";
         }

@@ -15,7 +15,6 @@ $movie = $database->query(
 
 if(!$movie->rating) $movie->rating = 0;
 
-// Busca as reviews
 $reviews = $database->query(
     "SELECT r.id, r.user_id, u.username, u.avatar, r.rate, r.review, r.date 
     FROM reviews r 

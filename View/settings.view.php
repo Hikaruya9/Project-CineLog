@@ -1,19 +1,13 @@
 <div class="max-w-2xl mx-auto bg-slate-800 p-8 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-semibold mb-6 text-blue-400">Editar Perfil</h2>
 
-    <?php if (isset($_SESSION['auth'])): ?>
-        <div class="bg-red-500 text-white p-4 rounded mb-4">
-            <ul>
-                <?php foreach ($_SESSION['auth'] as $auth): ?>
-                    <li><?= $auth ?></li>
-                <?php endforeach;
-                unset($_SESSION['auth']);
-                ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+    <?php if (isset($_SESSION['auth'])) {
+        showMessage("auth");
+    } elseif (isset($_SESSION['success'])) {
+        showMessage("success");
+    } ?>
 
-    <form action="/user-update" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <form action="/settings" method="POST" enctype="multipart/form-data" class="space-y-6">
 
         <!-- Nome de Usuário -->
         <div>

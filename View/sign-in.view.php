@@ -1,12 +1,11 @@
 <section class="max-w-lg mx-auto bg-slate-800 p-8 my-30 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-bold mb-6 text-blue-400 text-center">Login</h2>
 
-    <?php if (isset($_SESSION['auth'])): ?>
-        <div class="bg-red-500 text-white p-4 rounded mb-4">
-            <?= $_SESSION['auth'];
-            unset($_SESSION['auth']); ?>
-        </div>
-    <?php endif; ?>
+    <?php if (isset($_SESSION['auth'])) {
+        showMessage("auth");
+    } elseif (isset($_SESSION['success'])) {
+        showMessage("success");
+    } ?>
 
     <form action="/login" method="POST" class="space-y-8">
         <div>

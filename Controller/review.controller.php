@@ -1,57 +1,123 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['review-movie'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    require 'validator.php';
-    $validator = new Validator();
+    // Nova review
+    if (isset($_POST['review-movie'])) {
 
-    $data = $_POST;
-    settype($data['rate'], "integer");
+        $fields = "movie_id,user_id,rate";
+        $fieldsValues = ":movie_id, :user_id, :rate";
+        $params = [
+            'movie_id' => $_POST['movie-id'],
+            'user_id' => $_SESSION['user-id'],
+            'rate' => $_POST['rate']
+        ];
 
-    $rules = [
-        'rate' => ['required', 'min:1', 'max:5']
-    ];
+        if (!empty($_POST['review'])) {
+            $review = trim($_POST['review']);
+            $fields .= ",review";
+            $fieldsValues .= ", :review";
+            $params['review'] = $review;
+        }
 
-    $validationResult = $validator->validate($rules, $data);
+        $database->query(
+            query: "INSERT INTO reviews($fields) VALUES ($fieldsValues)",
+            params: $params
+        );
 
-    if ($validationResult->hasErrors()) {
-        $_SESSION['auth'] = $validationResult->getErrors();
-        header('Location: /review?movie-id=' . $_POST['movie-id']);
-        exit();
+        header("Location: /movie?movie-id={$_POST['movie-id']}");
+        exit;
     }
 
-    $fields = "movie_id,user_id,rate";
-    $fieldsValues = ":movie_id, :user_id, :rate";
-    $params = [
-        'movie_id' => $_POST['movie-id'],
-        'user_id' => $_SESSION['user-id'],
-        'rate' => $_POST['rate']
-    ];
+    // Atualizar review
+    if (isset($_POST['edit-review'])) {
 
-    if (!empty($_POST['review'])) {
-        $review = trim($_POST['review']);
-        $fields .= ",review";
-        $fieldsValues .= ", :review";
-        $params['review'] = $review;
+        $fields = "rate = :rate";
+        $params = [
+            'rate' => $_POST['rate'],
+            'id' => $_POST['review-id']
+        ];
+
+        if (!empty($_POST['review'])) {
+            $review = trim($_POST['review']);
+            $fields .= ", review = :review";
+            $params['review'] = $review;
+        }
+
+        $database->query(
+            query: "UPDATE reviews SET $fields WHERE id = :id",
+            params: $params
+        );
+
+        header("Location: /movie?movie-id={$_POST['movie-id']}");
+        exit;
     }
 
-    $database->query(
-        query: "INSERT INTO reviews($fields) VALUES ($fieldsValues)",
-        params: $params
-    );
+    // Deletar review
+    if (isset($_POST['delete-review'])) {
 
-    header("Location: /movie?movie-id={$_POST['movie-id']}");
-    exit;
+        $id = $_REQUEST['review-id'];
 
-} elseif (isset($_REQUEST['movie-id'])) {
+        $review = $database->query(
+            query: "SELECT user_id, movie_id FROM reviews WHERE id = :id",
+            class: Review::class,
+            params: ['id' => $id]
+        )->fetch();
 
-    $id = $_REQUEST['movie-id'] ?? '';
+        if ($review && ($_SESSION['user-id'] == $review->user_id || $_SESSION['permission_level'] == '1')) {
 
-    $movie = $database->query(
-        query: "SELECT id,title,year,poster FROM movies WHERE id = :id",
-        class: Movie::class,
-        params: ['id' => $id]
-    )->fetch();
+            $database->query(
+                query: "DELETE FROM reviews WHERE id = :id",
+                params: ['id' => $id]
+            );
 
-    view('review', compact('movie'));
+            header("Location: /movie?movie-id=" . $review->movie_id);
+            exit;
+        }
+
+        header('Location: /movie?movie-id=' . $review->movie_id);
+        exit;
+    }
+    
+} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+    // Página de envio de review
+    if (isset($_REQUEST['movie-id'])) {
+
+        $id = $_REQUEST['movie-id'];
+
+        $movie = $database->query(
+            query: "SELECT id,title,year,poster FROM movies WHERE id = :id",
+            class: Movie::class,
+            params: ['id' => $id]
+        )->fetch();
+
+        view('review', compact('movie'));
+    }
+
+    // Página de atualização de review
+    if (isset($_GET['review-id'])) {
+
+        $id = $_GET['review-id'];
+
+        $review = $database->query(
+            query: "SELECT r.id, r.movie_id, r.rate, r.review, m.title AS movie_title 
+         FROM reviews r
+         JOIN movies m ON r.movie_id = m.id
+         WHERE r.id = :id",
+            class: Review::class,
+            params: ['id' => $id]
+        )->fetch();
+
+        $movie = $database->query(
+            query: "SELECT id,title,year,poster FROM movies WHERE id = :id",
+            class: Movie::class,
+            params: ['id' => $review->movie_id]
+        )->fetch();
+
+        view('review', compact('review', 'movie'));
+    }
+} else {
+    header('Location: /');
+    exit();
 }

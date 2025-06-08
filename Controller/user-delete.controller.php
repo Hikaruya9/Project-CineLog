@@ -24,10 +24,13 @@ if (isset($_REQUEST['user-id']) || isset($_SESSION['user-id'])) {
         params: ['id' => $id]
     );
 
+    $route = "/users";
+
     if($_SESSION['user-id'] == $id){
         session_destroy();
+        $route = "/";
     }
 
-    header('Location: /?message=success');
+    header('Location: ' . $route);
     exit();
 }

@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]
         );
 
-        $_SESSION['auth'] = "Conta criada com sucesso!";
+        $_SESSION['success'] = "Conta criada com sucesso!";
         header('Location: /sign-in');
         exit();
     }

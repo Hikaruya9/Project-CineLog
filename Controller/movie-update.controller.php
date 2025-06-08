@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update-movie'])) {
         params: $params
     );
 
-    $_SESSION['auth'][] = "Informações do filme atualizadas com sucesso!";
+    $_SESSION['success'] = "Informações do filme atualizadas com sucesso!";
     header('Location: /movie-update?movie-id=' . $_POST['movie-id']);
     exit();
 } elseif (isset($_REQUEST['movie-id'])) {

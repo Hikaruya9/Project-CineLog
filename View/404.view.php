@@ -13,8 +13,5 @@
         <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
             Voltar ao Início
         </a>
-        <a href="#" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-bold py-3 px-8 rounded-lg transition duration-300">
-            Explorar Filmes
-        </a>
     </div>
 </div>

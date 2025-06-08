@@ -22,7 +22,7 @@ if (isset($_REQUEST['user-id']) || isset($_SESSION['user-id'])) {
         )->fetchAll();
 
         $user->reviews_with_comments = $database->query(
-            query: "SELECT r.movie_id, m.title as movie_title, r.rate, r.review, r.date
+            query: "SELECT r.id, r.movie_id, m.title AS movie_title, m.poster AS movie_poster, r.rate, r.review, r.date
                     FROM reviews r
                     JOIN movies m ON r.movie_id = m.id
                     WHERE r.user_id = :user_id AND r.review IS NOT NULL AND r.review != ''

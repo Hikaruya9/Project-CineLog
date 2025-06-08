@@ -1,18 +1,11 @@
 <section class="max-w-lg mx-auto bg-slate-800 p-8 my-30 rounded-lg shadow-md text-white">
     <h2 class="text-2xl font-bold mb-6 text-blue-400 text-center">Crie sua conta</h2>
 
-    <?php if (isset($_SESSION['auth'])): ?>
-        <div class="bg-red-500 text-white p-4 rounded mb-4">
-            <ul>
-                <?php foreach ($_SESSION['auth'] as $auth): // Percorrerá a lista de valores (em string) que estiverem no array 'validacao' em $_SESSION e mostrará esse valor 
-                ?>
-                    <li><?= $auth ?></li>
-                <?php endforeach;
-                unset($_SESSION['auth']); // Limpa todos os valores de 'validacao' em $_SESSION
-                ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+    <?php if (isset($_SESSION['auth'])) {
+        showMessage("auth");
+    } elseif (isset($_SESSION['success'])) {
+        showMessage("success");
+    } ?>
 
     <form action="/login" method="POST" class="space-y-8">
         <div>
